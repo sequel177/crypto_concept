@@ -1,5 +1,19 @@
+#frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Coin, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#validations' do
+  	let(:coin) { build(:coin) }
+
+	it 'tests that factory is valid' do
+	  expect(coin).to be_valid # coin.valid? => true
+	end
+
+	it 'has an invalid name' do
+	  coin.name = ''
+	  expect(coin).not_to be_valid
+	  expect(coin.errors[:name]).to include("can't be blank")
+  	end 
+  end
 end
