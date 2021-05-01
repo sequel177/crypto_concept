@@ -11,9 +11,8 @@ RSpec.describe CoinsController do
     it 'returns a proper JSON' do
       coin = create :coin
       get '/coins'
-      body = JSON.parse(response.body).deep_symbolize_keys
-      expect(body).to eq(
-        data: [
+      expect(json_data).to eq(
+        [
           {
             id: coin.id.to_s,
             type: 'coin',
