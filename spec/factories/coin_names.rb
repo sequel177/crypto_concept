@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :coin_name do
-    price { "9.99" }
+  	acronym {"Sample acronym"}
+    price { "Sample price" }
+    slug {"sample-coin_name"}
   end
 end
