@@ -1,0 +1,2 @@
+class CoinName < ApplicationRecord
+end
