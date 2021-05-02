@@ -11,20 +11,18 @@ RSpec.describe CoinsController do
     it 'returns a proper JSON' do
       coin = create :coin
       get '/coins'
-      expect(json_data).to eq(
-        [
-          {
-            id: coin.id.to_s,
-            type: 'coin',
-            attributes: {
-              name: coin.name,
-              ticker: coin.ticker,
-              price: coin.price,
-              slug: coin.slug
-            }
-          }
-        ]
-      )
+      expect(json_data.length).to eq(1)
+      expected = json_data.first
+      aggregate_failures do
+        expect(expected[:id]).to eq(coin.id.to_s)
+        expect(expected[:type]).to eq('coin')
+        expect(expected[:attributes]).to eq(
+          name: coin.name,
+          ticker: coin.ticker,
+          price: coin.price,
+          slug: coin.slug
+        )
+      end
     end
   end
 end
