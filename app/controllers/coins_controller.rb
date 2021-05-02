@@ -2,7 +2,7 @@
 
 class CoinsController < ApplicationController
   def index
-  	coins = Coin.all
+  	coins = Coin.recent
   	render json: serializer.new(coins), status: :ok
   end
 

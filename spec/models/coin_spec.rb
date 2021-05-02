@@ -4,16 +4,32 @@ require 'rails_helper'
 
 RSpec.describe Coin, type: :model do
   describe '#validations' do
-  	let(:coin) { build(:coin) }
-
-	it 'tests that factory is valid' do
-	  expect(coin).to be_valid # coin.valid? => true
-	end
-
-	it 'has an invalid name' do
-	  coin.name = ''
-	  expect(coin).not_to be_valid
-	  expect(coin.errors[:name]).to include("can't be blank")
-  	end 
   end
+
+  describe '.recent' do
+    it 'returns coins in the correct order' do
+      older_coin =
+        create(:coin, created_at: 1.hour.ago)
+      recent_coin = create(:coin)
+
+      expect(described_class.recent).to eq(
+        [recent_coin, older_coin]
+      )
+
+      recent_coin.update_column(:created_at, 2.hours.ago)
+
+      expect(described_class.recent).to eq(
+        [older_coin, recent_coin]
+      )
+    end
+  end
+
+  describe 'to_param' do
+    let!(:coins) do
+      create_list :coin, 3
+    end
+    it 'returns a unique identifier' do
+      expect(Coin.all.collect { |c| c.to_param }.uniq.size).to eq 3
+    end
+  end  
 end
