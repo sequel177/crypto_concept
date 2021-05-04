@@ -53,4 +53,28 @@ RSpec.describe CoinsController do
       )
     end
   end
+
+  describe '#show' do
+    let(:coin) { create :coin }
+
+    subject { get "/coins/#{coin.id}" }
+
+    before { subject }
+
+    it 'returns a success response' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns a proper JSON' do
+      aggregate_failures do
+        expect(json_data[:id]).to eq(coin.id.to_s)
+        expect(json_data[:type]).to eq('coin')
+        expect(json_data[:attributes]).to eq(
+          name: coin.name,
+          ticker: coin.ticker,
+          price: coin.price
+        )
+      end
+    end
+  end
 end
