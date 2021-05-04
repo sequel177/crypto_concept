@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 class CoinsController < ApplicationController
+	include Paginable
 
   def index
-  	coins = Coin.recent
-  	paginated = paginator.call(
-  	  coins,
-  	  params: pagination_params,
-  	  base_url: request.url
-  	)
-
-  	options = { meta: paginated.meta.to_h, links: paginated.links.to_h }
-  	render json: serializer.new(paginated.items, options), status: :ok
+  	paginated = paginate(Coin.recent)
+  	render_collection(paginated)
   end
 
   def serializer
