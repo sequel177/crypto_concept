@@ -8,6 +8,11 @@ class CoinsController < ApplicationController
   	render_collection(paginated)
   end
 
+  def show
+    coin = Coin.find(params[:id])
+    render json: serializer.new(coin)
+  end
+
   def serializer
     CoinSerializer
   end
