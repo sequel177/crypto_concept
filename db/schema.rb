@@ -36,5 +36,4 @@ ActiveRecord::Schema.define(version: 2021_05_06_172343) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "coins_exchanges", "coins"
 end
